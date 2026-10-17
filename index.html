@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GDGoC TUM · Hackathons &amp; Solutions Challenge</title>
+<style>
+:root{--bg:#fafaf7;--card:#fff;--ink:#1f2328;--mute:#5f6670;--line:#e4e4dd;--blue:#1a73e8;--red:#d93025;--yel:#e8a400;--grn:#188038;--tint:#eef4fe;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181c;--card:#1e2227;--ink:#eceef0;--mute:#9aa3ad;--line:#2e343b;--blue:#7ab0ff;--red:#f28b82;--yel:#fdd663;--grn:#81c995;--tint:#1b2636}}
+:root[data-theme="dark"]{--bg:#15181c;--card:#1e2227;--ink:#eceef0;--mute:#9aa3ad;--line:#2e343b;--blue:#7ab0ff;--red:#f28b82;--yel:#fdd663;--grn:#81c995;--tint:#1b2636}
+html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--blue)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+nav{max-width:1000px;margin:auto;display:flex;align-items:center;gap:4px;padding:10px 16px;overflow-x:auto;white-space:nowrap}
+nav b{margin-right:8px}
+nav a{color:var(--mute);text-decoration:none;padding:6px 12px;border-radius:99px;font-size:14px}
+nav a:hover,nav a.on{background:var(--tint);color:var(--blue)}
+#th{margin-left:auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 11px;cursor:pointer}
+main{max-width:1000px;margin:auto;padding:0 16px 60px}
+section{padding:44px 0 8px}
+h1{font-size:clamp(30px,6vw,52px);line-height:1.1;margin:.2em 0}
+h2{font-size:26px;margin:0 0 6px}
+.sub{color:var(--mute);margin:0 0 20px}
+.dots span{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.path{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.path span{padding:8px 16px;border-radius:99px;font-weight:700;font-size:14px;border:2px solid}
+.btn{display:inline-block;padding:10px 18px;border-radius:99px;background:var(--blue);color:#fff;text-decoration:none;font-weight:600;margin:4px 6px 4px 0}
+.btn.o{background:none;color:var(--blue);border:1px solid var(--blue)}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.stats div{flex:1;min-width:130px}.stats big{display:block;font-size:28px;font-weight:800}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 14px;border-radius:12px;cursor:pointer;text-align:left;font:inherit;font-size:14px}
+.tab small{display:block;color:var(--mute)}
+.tab.on{border-color:var(--blue);background:var(--tint)}
+.tab.cur::after{content:" ● now";color:var(--grn);font-size:12px}
+ul.chk{list-style:none;padding:0;margin:8px 0}
+ul.chk li{display:flex;gap:10px;padding:6px 0;align-items:flex-start}
+ul.chk input{margin-top:5px;width:18px;height:18px;accent-color:var(--blue);flex:none}
+ul.chk input:checked+span{text-decoration:line-through;color:var(--mute)}
+.two{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.bar{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0 14px}
+.bar i{display:block;height:100%;width:0;background:var(--grn);transition:width .3s}
+.trk{text-decoration:none;color:var(--ink);border-top:4px solid var(--c);transition:transform .15s}
+.trk:hover{transform:translateY(-3px)}.trk b{font-size:17px}.trk p{margin:4px 0 0;color:var(--mute);font-size:14px}
+.stage{cursor:pointer;text-align:left;font:inherit;color:var(--ink)}
+.stage.on{border-color:var(--blue);background:var(--tint)}
+.stage em{font-style:normal;color:var(--blue);font-weight:700;font-size:13px}
+#sd{margin-top:12px;min-height:52px}
+.tree{font-family:ui-monospace,Menlo,monospace;font-size:14px;line-height:1.9;overflow-x:auto}
+.tree a{text-decoration:none}.tree .d{color:var(--mute)}
+details{border-bottom:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:600}
+footer{text-align:center;color:var(--mute);padding:30px 16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header><nav id="nav">
+<b>GDGoC TUM</b>
+<a href="#home">Home</a><a href="#roadmap">Roadmap</a><a href="#tracks">Tracks</a><a href="#journey">Journey</a><a href="#checklist">Checklist</a><a href="#team">Team</a><a href="#rules">Guidelines</a><a href="#repo">Repo</a>
+<button id="th" aria-label="Toggle theme">◐</button>
+</nav></header>
+<main>
+<section id="home">
+<div class="dots"><span style="background:var(--blue)"></span><span style="background:var(--red)"></span><span style="background:var(--yel)"></span><span style="background:var(--grn)"></span></div>
+<h1>Hackathons &amp; Solutions Challenge</h1>
+<p class="sub">The shared guide for Google Developer Group on Campus members at the Technical University of Mombasa preparing for hackathons and the Google Solution Challenge.</p>
+<div class="path"><span style="color:var(--blue);border-color:var(--blue)">IDEA</span><span style="color:var(--red);border-color:var(--red)">BUILD</span><span style="color:var(--yel);border-color:var(--yel)">PITCH</span><span style="color:var(--grn);border-color:var(--grn)">IMPACT</span></div>
+<a class="btn" href="#roadmap">See the roadmap</a><a class="btn o" href="#tracks">Pick a track</a><a class="btn o" href="https://github.com/GDG-TUM/GDGoC-TUM-Hackathon-Structure">View on GitHub</a>
+<div class="stats">
+<div class="card"><big id="cd">–</big>until / since kickoff (19 Oct)</div>
+<div class="card"><big>4</big>two-week blocks</div>
+<div class="card"><big>5</big>tracks</div>
+<div class="card"><big>2+</big>buildathons per week</div>
+</div>
+<h2 style="margin-top:32px">Programme goals</h2>
+<div class="grid" id="goals"></div>
+</section>
+
+<section id="roadmap">
+<h2>Semester roadmap</h2>
+<p class="sub">19 October – 14 December 2026. Pick a block; tick off its outcomes as you go.</p>
+<div class="tabs" id="tabs"></div>
+<div class="card" id="blk"></div>
+</section>
+
+<section id="tracks">
+<h2>Tracks &amp; weekly buildathons</h2>
+<p class="sub">Tap a track to open its challenge template on GitHub.</p>
+<div class="grid" id="trk"></div>
+<div class="card" style="margin-top:14px">
+<b>How buildathons work</b>
+<ol id="steps" style="margin:8px 0 0;padding-left:20px"></ol>
+<p style="color:var(--mute);margin:10px 0 0"><b>Heads up:</b> challenge files are templates. Don't treat a challenge as live until organisers announce it in the official GDG groups.</p>
+</div>
+</section>
+
+<section id="journey">
+<h2>The hackathon journey</h2>
+<p class="sub">DISCOVER → IDEATE → TEAM UP → BUILD → VALIDATE → PITCH → COMPETE → IMPACT</p>
+<div class="grid" id="stg"></div>
+<div class="card" id="sd"></div>
+</section>
+
+<section id="checklist">
+<h2>Readiness checklist</h2>
+<p class="sub">Your progress is saved in this browser.</p>
+<div class="card"><b id="pt">0%</b> ready<div class="bar"><i id="pb"></i></div>
+<div class="two" id="cl"></div>
+<button class="btn o" id="rs" style="cursor:pointer;background:none">Reset</button></div>
+</section>
+
+<section id="team">
+<h2>Team workflow</h2>
+<p class="sub">Roles are suggestions; one person can hold several.</p>
+<div class="grid" id="roles"></div>
+<p class="sub" style="margin-top:12px">Track tasks in GitHub Issues or a shared board: keep them small, give each an owner and a deadline, and raise blockers early.</p>
+</section>
+
+<section id="rules">
+<h2>Participation guidelines</h2>
+<div class="card" id="gl"></div>
+</section>
+
+<section id="repo">
+<h2>Repository map</h2>
+<p class="sub">Every file links straight to GitHub.</p>
+<div class="card tree" id="tree"></div>
+<h2 style="margin-top:28px">How to contribute</h2>
+<ol class="card" style="padding-left:36px;margin:0">
+<li>Fork or clone the repository.</li><li>Create a branch for your changes.</li><li>Add resources or improve docs in the right folder.</li><li>Use descriptive file names with a short description, source link and level.</li><li>Open a pull request, or follow the process agreed by organisers.</li>
+</ol>
+<p class="sub" style="margin-top:10px">Link to official sources rather than uploading copyrighted course material.</p>
+</section>
+</main>
+<footer><b>Let’s build with purpose.</b><br>GDG on Campus · Technical University of Mombasa</footer>
+
+<script>
+var R="https://github.com/GDG-TUM/GDGoC-TUM-Hackathon-Structure/blob/main/";
+var $=function(i){return document.getElementById(i)};
+var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+var goals=["Understand the hackathon process as a beginner","Discover real user problems and write clear statements","Align ideas with UN SDGs and intended impact","Form balanced teams with clear roles","Turn ideas into MVPs and prototypes","Practise with Google developer tools","Test ideas, gather feedback, improve","Pitch and demo with confidence","Prepare for external hackathons and the Solution Challenge","Continue promising projects beyond the competition"];
+$("goals").innerHTML=goals.map(function(g,i){return '<div class="card"><b style="color:var(--blue)">'+String(i+1).padStart(2,"0")+'</b><br>'+g+'</div>'}).join("");
+
+var blocks=[
+{n:1,d:"19 Oct – 1 Nov",s:new Date(2026,9,19),e:new Date(2026,10,2),t:"Foundations & problem discovery",f:"Hackathon foundations · Problem discovery · SDG & impact alignment · Team formation",a:["Intro to the hackathon journey, formats, judging and teamwork","Problem-discovery exercise on real student or community challenges","Turn broad concerns into specific problem statements","Identify SDGs, beneficiaries and impact measures","Connect with teammates and agree on roles"],o:["One-paragraph problem statement","Clearly described target user","First-pass SDG / impact rationale","Team roster with roles, or an idea seeking teammates"]},
+{n:2,d:"2 – 15 Nov",s:new Date(2026,10,2),e:new Date(2026,10,16),t:"From idea to MVP",f:"Solution design · User journeys · MVP thinking · Tech selection · Planning",a:["Compare several solution ideas before committing","Map a simple user journey and workflow","Define the smallest useful version","Choose a track and tech based on problem, skills and time","Create a task board, milestones and a project README"],o:["Selected solution and value proposition","User journey, wireframe or architecture sketch","Prioritised MVP feature list","Team task board and build plan"]},
+{n:3,d:"16 – 29 Nov",s:new Date(2026,10,16),e:new Date(2026,10,30),t:"Build, validate & iterate",f:"Practical building · Google developer tech · Testing · Feedback · Iteration",a:["Build the core user flow before optional features","Use Google developer tools where they fit","Short check-ins; surface blockers early","Test with teammates or intended users","Record feedback, bugs, assumptions and changes"],o:["Working prototype or proof of concept","Record of tests, feedback and limitations","Prioritised improvements list","Clear account of what's built and what remains"]},
+{n:4,d:"30 Nov – 14 Dec",s:new Date(2026,10,30),e:new Date(2026,11,15),t:"Pitch, demo & competition readiness",f:"Pitch & communication · Demo & readiness · Sustainability and next steps",a:["Explain problem, users, solution, differentiation and impact","Prepare a concise pitch deck and reliable demo flow","Rehearse within the time limit, gather peer feedback","Test from a clean start; prepare a backup demo","Review judging criteria and external competition rules"],o:["Concise pitch deck","Rehearsed live demo or recorded backup","Repo with setup instructions and known limitations","Next-steps plan for validation or submission"]}];
+var now=new Date(),cur=0,cb=-1;
+blocks.forEach(function(b,i){if(now>=b.s&&now<b.e)cb=i});
+var st=new Date(2026,9,19),dd=Math.ceil((st-now)/864e5);
+$("cd").textContent=dd>0?dd+" days":(cb>=0?"Block "+blocks[cb].n:"Done");
+cur=cb>=0?cb:0;
+function drawBlk(){
+ $("tabs").innerHTML=blocks.map(function(b,i){return '<button class="tab'+(i==cur?' on':'')+(i==cb?' cur':'')+'" data-i="'+i+'"><b>Block '+b.n+'</b><small>'+b.d+'</small></button>'}).join("");
+ var b=blocks[cur];
+ $("blk").innerHTML='<h3 style="margin:0">'+b.t+'</h3><p class="sub" style="margin:4px 0 14px">'+b.f+'</p><div class="two"><div><b>Suggested activities</b><ul>'+b.a.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></div><div><b>By the end, aim to have</b><ul class="chk">'+b.o.map(function(x,j){var k="b"+cur+"o"+j;return '<li><input type="checkbox" data-k="'+k+'"'+(store.get(k)=="1"?" checked":"")+'><span>'+x+'</span></li>'}).join("")+'</ul></div></div>';
+}
+$("tabs").onclick=function(e){var t=e.target.closest(".tab");if(t){cur=+t.dataset.i;drawBlk()}};
+$("blk").onchange=function(e){if(e.target.dataset.k)store.set(e.target.dataset.k,e.target.checked?"1":"0")};
+drawBlk();
+
+var trk=[["Web Development","web-development.md","var(--blue)","Ship a usable web app around a real problem."],["Cloud Computing","cloud-computing.md","var(--red)","Deploy, scale and secure on the cloud."],["Mobile Development","mobile-development.md","var(--yel)","Put the solution in people's pockets."],["AI & Machine Learning","ai-machine-learning.md","var(--grn)","One combined track for AI and ML builds."],["Cybersecurity","cybersecurity.md","var(--mute)","Only in labs and systems you own or may test."]];
+$("trk").innerHTML=trk.map(function(t){return '<a class="card trk" style="--c:'+t[2]+'" href="'+R+'challenges/'+t[1]+'"><b>'+t[0]+'</b><p>'+t[3]+'</p><p style="color:var(--blue)">Open template →</p></a>'}).join("")+'<a class="card trk" style="--c:var(--line)" href="'+R+'challenges/README.md"><b>All challenges</b><p>Overview of the challenge folder.</p><p style="color:var(--blue)">Open →</p></a>';
+$("steps").innerHTML=["Watch the official group for the new challenge announcement.","Read the track file and the challenge-specific instructions.","Check the deadline, deliverables and evaluation criteria.","Build individually or with a team, as announced.","Submit the link, files, demo or write-up the announced way.","Review feedback and use it in the next challenge."].map(function(x){return '<li>'+x+'</li>'}).join("");
+
+var stg=[["Discover","Hackathon foundations","Understand the format, process, judging and collaboration expectations."],["Ideate","Ideation & problem discovery","Find a real problem and describe it clearly."],["Team up","SDG & impact · Team formation","Identify beneficiaries, SDGs and outcomes; agree on roles, strengths and communication."],["Build","From idea to MVP · Build with Google","Scope a realistic first version and pick appropriate technologies; explore Google developer tools through practical work."],["Validate","Validation & iteration","Test assumptions, gather feedback and improve the solution."],["Pitch","Pitch & communication","Tell a clear story about the problem, solution and impact."],["Compete","Demo & competition readiness","Prepare the submission, test the demo and rehearse."],["Impact","Next steps","Continue promising projects beyond a competition."]];
+$("stg").innerHTML=stg.map(function(s,i){return '<button class="card stage" data-i="'+i+'"><em>'+(i+1)+'</em><br><b>'+s[0]+'</b></button>'}).join("");
+function showStg(i){document.querySelectorAll(".stage").forEach(function(x,j){x.classList.toggle("on",j==i)});$("sd").innerHTML='<b>'+stg[i][1]+'</b><br>'+stg[i][2]}
+$("stg").onclick=function(e){var s=e.target.closest(".stage");if(s)showStg(+s.dataset.i)};showStg(0);
+
+var cl={"Before building":["Problem statement is clear and specific","Target user or beneficiary identified","Team can explain why the problem matters","MVP scope is realistic for the time","Tasks and responsibilities agreed"],"During building":["Core user flow prioritised","Code stored in a repository","Setup instructions documented","Progress and blockers communicated","Testing and feedback recorded"],"Before presenting":["Prototype demos reliably","Pitch covers problem, solution, users, impact","Team has practised their parts","Demo tested on the presentation device","Backup screenshots or recording ready","Limitations and future work stated honestly"]};
+var all=[];
+$("cl").innerHTML=Object.keys(cl).map(function(h,i){return '<div><b>'+h+'</b><ul class="chk">'+cl[h].map(function(x,j){var k="c"+i+"_"+j;all.push(k);return '<li><input type="checkbox" data-k="'+k+'"'+(store.get(k)=="1"?" checked":"")+'><span>'+x+'</span></li>'}).join("")+'</ul></div>'}).join("");
+function prog(){var n=0;all.forEach(function(k){if(store.get(k)=="1")n++});var p=Math.round(n/all.length*100);$("pt").textContent=p+"%";$("pb").style.width=p+"%"}
+$("cl").onchange=function(e){if(e.target.dataset.k){store.set(e.target.dataset.k,e.target.checked?"1":"0");prog()}};
+$("rs").onclick=function(){all.forEach(function(k){store.set(k,"0")});document.querySelectorAll("#cl input").forEach(function(i){i.checked=false});prog()};prog();
+
+var roles=[["Team lead / coordinator","Keeps the team aligned and tracks progress."],["Product / problem lead","Clarifies users, problem statement and MVP scope."],["Developers / builders","Implement the core solution."],["Design / research lead","User journeys, research, usability and feedback."],["Pitch / documentation lead","Records decisions, maintains docs, prepares the demo story."]];
+$("roles").innerHTML=roles.map(function(r){return '<div class="card"><b>'+r[0]+'</b><p style="margin:4px 0 0;color:var(--mute);font-size:14px">'+r[1]+'</p></div>'}).join("");
+
+var gl=[["Be welcoming","Respect different skill levels and focus on learning and collaboration."],["Keep it original","Acknowledge external code, data, libraries and assets."],["Protect secrets","Never commit passwords, API keys, credentials or sensitive personal data."],["Test only what you may","For cybersecurity, use only systems and labs you own or have explicit permission to test."],["Mind real data","Avoid collecting real personal data for prototypes without a clear, approved, safe reason."],["Communicate","Tell teammates and organisers early if you're blocked or will miss a deadline."]];
+$("gl").innerHTML=gl.map(function(g){return '<details><summary>'+g[0]+'</summary><p style="margin:6px 0 0;color:var(--mute)">'+g[1]+'</p></details>'}).join("");
+
+function L(p,t){return '<a href="'+R+p+'">'+t+'</a>'}
+$("tree").innerHTML=['<span class="d">📁 gdg-tum-hackathons/</span>','├── '+L("README.md","README.md"),'├── 📁 roadmap/','│   └── '+L("roadmap/SEMESTER_ROADMAP.md","SEMESTER_ROADMAP.md"),'├── 📁 '+L("challenges","challenges/"),'│   ├── '+L("challenges/README.md","README.md"),'│   ├── '+L("challenges/web-development.md","web-development.md"),'│   ├── '+L("challenges/cloud-computing.md","cloud-computing.md"),'│   ├── '+L("challenges/mobile-development.md","mobile-development.md"),'│   ├── '+L("challenges/ai-machine-learning.md","ai-machine-learning.md"),'│   └── '+L("challenges/cybersecurity.md","cybersecurity.md"),'├── 📁 resources/','│   └── '+L("resources/README.md","README.md"),'└── 📁 '+L("templates","templates/"),'    ├── '+L("templates/project-brief.md","project-brief.md"),'    ├── '+L("templates/team-sprint-board.md","team-sprint-board.md"),'    └── '+L("templates/pitch-checklist.md","pitch-checklist.md")].join("<br>").replace(/ /g,"&nbsp;").replace(/&nbsp;href/g," href").replace(/<a&nbsp;/g,"<a ");
+
+var secs=[].slice.call(document.querySelectorAll("section")),links=[].slice.call(document.querySelectorAll("nav a"));
+window.addEventListener("scroll",function(){var y=window.scrollY+120,c=0;secs.forEach(function(s,i){if(s.offsetTop<=y)c=i});links.forEach(function(a,i){a.classList.toggle("on",i==c)})});
+$("th").onclick=function(){var r=document.documentElement,d=r.dataset.theme?r.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=d?"light":"dark"};
+</script>
+</body>
+</html>
