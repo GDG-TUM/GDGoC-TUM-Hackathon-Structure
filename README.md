@@ -1,6 +1,5 @@
 # GDG on Campus TUM — Hackathons & Solutions Challenge
-
-**Semester programme:** 19 October – 14 December 2026  
+ 
 **Programme pathway:** **IDEA → BUILD → PITCH → IMPACT**
 
 Welcome to the Hackathons & Solutions Challenge repository for Google Developer Groups (GDG) on Campus at the Technical University of Mombasa (TUM). This repository is the shared guide for members preparing for hackathons, the Google Solution Challenge, and other innovation opportunities during the semester.
